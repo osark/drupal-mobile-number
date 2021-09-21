@@ -36,7 +36,7 @@ class MobileNumberValidator extends ConstraintValidator {
     $field_label = $item->getFieldDefinition()->getLabel();
     /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
     $entity = $item->getEntity();
-    $entity_type = $entity->getEntityType()->getLowercaseLabel();
+    $entity_type = $entity->getEntityType()->getSingularLabel();
     $allowed_countries = $item->getFieldDefinition()->getSetting('countries');
     $verify = $item->getFieldDefinition()->getSetting('verify');
     $unique = $item->getFieldDefinition()
@@ -51,7 +51,7 @@ class MobileNumberValidator extends ConstraintValidator {
       if (!in_array($util->getCountry($mobile_number), $allowed_countries) && $allowed_countries) {
         $this->context->addViolation($constraint->allowedCountry, [
           '@value' => $util->getCountryName($country),
-          '@field_name' => Unicode::strtolower($field_label),
+          '@field_name' => mb_strtolower($field_label),
         ]);
       }
       else {
@@ -61,27 +61,27 @@ class MobileNumberValidator extends ConstraintValidator {
         if ($verification === -1) {
           $this->context->addViolation($constraint->flood, [
             '@value' => $display_number,
-            '@field_name' => Unicode::strtolower($field_label),
+            '@field_name' => mb_strtolower($field_label),
           ]);
         }
         elseif ($verification === FALSE) {
           $this->context->addViolation($constraint->verification, [
             '@value' => $display_number,
-            '@field_name' => Unicode::strtolower($field_label),
+            '@field_name' => mb_strtolower($field_label),
           ]);
         }
         elseif (!$verification && !$bypass_verification && ($tfa || $verify === MobileNumberUtilInterface::MOBILE_NUMBER_VERIFY_REQUIRED)) {
           $this->context->addViolation($constraint->verifyRequired, [
             '@value' => $display_number,
             '@entity_type' => $entity_type,
-            '@field_name' => Unicode::strtolower($field_label),
+            '@field_name' => mb_strtolower($field_label),
           ]);
         }
         elseif ($unique && !$item->isUnique($unique)) {
           $this->context->addViolation($constraint->unique, [
             '@value' => $display_number,
             '@entity_type' => $entity_type,
-            '@field_name' => Unicode::strtolower($field_label),
+            '@field_name' => mb_strtolower($field_label),
           ]);
         }
       }
@@ -90,7 +90,7 @@ class MobileNumberValidator extends ConstraintValidator {
       $this->context->addViolation($constraint->validity, [
         '@value' => $values['local_number'],
         '@entity_type' => $entity_type,
-        '@field_name' => Unicode::strtolower($field_label),
+        '@field_name' => mb_strtolower($field_label),
         '@message' => t($e->getMessage()),
       ]);
     }

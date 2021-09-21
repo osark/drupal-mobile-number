@@ -398,12 +398,14 @@ class MobileNumber extends FormElement {
     $settings = $element['#mobile_number'];
     $op = static::getOp($element, $form_state);
 
-    drupal_get_messages();
     $errors = $form_state->getErrors();
 
     foreach ($errors as $path => $message) {
       if (strpos($path, implode('][', $element['#parents'])) === 0) {
-        drupal_set_message($message, 'error');
+        $messenger = \Drupal::messenger();
+        if (isset($message)) {
+          $messenger->addMessage($message, 'error');
+        }
       }
       else {
         unset($errors[$path]);

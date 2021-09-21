@@ -7,14 +7,14 @@ use Drupal\Core\Form\FormState;
 use Drupal\Core\Language\Language;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\mobile_number\MobileNumberUtilInterface;
-use Drupal\simpletest\WebTestBase;
+use \Drupal\Tests\BrowserTestBase;
 
 /**
  * Mobile number field functionality.'.
  *
  * @group mobile_number
  */
-class MobileNumberFieldTest extends WebTestBase {
+class MobileNumberFieldTest extends BrowserTestBase {
 
   public static $modules = ['mobile_number', 'node'];
 
@@ -394,7 +394,7 @@ class MobileNumberFieldTest extends WebTestBase {
    */
   public function updateFieldConfig($name, $setting, $value) {
     /** @var \Drupal\field\FieldConfigInterface $field */
-    $fields = \Drupal::entityManager()->getStorage('field_config')->loadByProperties(['field_name' => "field_$name"]);
+    $fields = \Drupal::service('entity_type.manager')->getStorage('field_config')->loadByProperties(['field_name' => "field_$name"]);
     $field = reset($fields);
 
     $new_field = FieldConfig::create($field->toArray());

@@ -3,14 +3,14 @@
 namespace Drupal\mobile_number\Tests;
 
 use Drupal\Core\Form\FormState;
-use Drupal\simpletest\WebTestBase;
+use \Drupal\Tests\BrowserTestBase;
 
 /**
  * Mobile number form element functionality.
  *
  * @group mobile_number
  */
-class MobileNumberElementTest extends WebTestBase {
+class MobileNumberElementTest extends BrowserTestBase {
 
   public static $modules = ['mobile_number'];
 

@@ -1,5 +1,7 @@
 <?php
 
+namespace Drupal\mobile_number\Plugin\TfaValidation;
+
 /**
  * @file
  * MobileNumberTfa.php
@@ -13,6 +15,7 @@ use Drupal\Core\Form\FormStateInterface;
 use Drupal\encrypt\EncryptionProfileManagerInterface;
 use Drupal\encrypt\EncryptServiceInterface;
 use Drupal\mobile_number\Exception\MobileNumberException;
+use Drupal\Core\Messenger\MessengerInterface;
 
 /**
  * Class MobileNumberTfa is a validation and sending plugin for TFA.
@@ -21,7 +24,7 @@ use Drupal\mobile_number\Exception\MobileNumberException;
  *
  * @ingroup mobile_number
  */
-class MobileNumberTfa extends TfaBasePlugin implements TfaValidationInterface, TfaSendInterface {
+abstract class MobileNumberTfa extends TfaBasePlugin implements TfaValidationInterface, TfaSendInterface {
   /**
    * Libphonenumber Utility object.
    *
@@ -37,11 +40,19 @@ class MobileNumberTfa extends TfaBasePlugin implements TfaValidationInterface, T
   public $mobileNumber;
 
   /**
+   * The Messenger service.
+   *
+   * @var \Drupal\Core\Messenger\MessengerInterface
+   */
+  protected $messenger;
+
+  /**
    * {@inheritdoc}
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, UserDataInterface $user_data, EncryptionProfileManagerInterface $encryption_profile_manager, EncryptServiceInterface $encrypt_service) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, UserDataInterface $user_data, EncryptionProfileManagerInterface $encryption_profile_manager, EncryptServiceInterface $encrypt_service, MessengerInterface $messenger) {
     parent::__construct($configuration, $plugin_id, $plugin_definition, $user_data, $encryption_profile_manager, $encrypt_service);
     $this->mobileNumberUtil = \Drupal::service('mobile_number.util');
+    $this->messenger = $messenger;
 
     if (!empty($context['validate_context']) && !empty($context['validate_context']['code'])) {
       $this->code = $context['validate_context']['code'];
@@ -76,7 +87,7 @@ class MobileNumberTfa extends TfaBasePlugin implements TfaValidationInterface, T
   public function begin() {
     if (!$this->code) {
       if (!$this->sendCode()) {
-        drupal_set_message(t('Unable to deliver the code. Please contact support.'), 'error');
+        $this->messenger->addError(t('Unable to deliver the code. Please contact support.'));
       }
     }
   }
@@ -122,13 +133,13 @@ class MobileNumberTfa extends TfaBasePlugin implements TfaValidationInterface, T
     // Resend code if pushed.
     if ($form_state['values']['op'] === $form_state['values']['resend']) {
       if (!$this->mobileNumberUtil->checkFlood($this->mobileNumber, 'sms')) {
-        drupal_set_message(t('Too many verification code requests, please try again shortly.'), 'error');
+        $this->messenger->addError(t('Too many verification code requests, please try again shortly.'));
       }
       elseif (!$this->sendCode()) {
-        drupal_set_message(t('Unable to deliver the code. Please contact support.'), 'error');
+        $this->messenger->addError(t('Unable to deliver the code. Please contact support.'));
       }
       else {
-        drupal_set_message(t('Code resent'));
+        $this->messenger->addMessage(t('Hello world'));
       }
 
       return FALSE;

@@ -9,6 +9,7 @@ use Drupal\Core\Field\FieldItemBase;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
 use Drupal\Core\TypedData\DataDefinition;
 use Drupal\mobile_number\MobileNumberUtilInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
 
 /**
  * Plugin implementation of the 'mobile_number' field type.
@@ -428,7 +429,7 @@ class MobileNumberItem extends FieldItemBase {
     $field_label = $this->getFieldDefinition()->getLabel();
     /** @var \Drupal\Core\Entity\ContentEntityInterface $entity */
     $entity = $this->getEntity();
-    $entity_type = $entity->getEntityType()->getLowercaseLabel();
+    $entity_type = $entity->getEntityType()->getSingularLabel();
     $entity_type_id = $entity->getEntityTypeId();
     $id_key = $entity->getEntityType()->getKey('id');
 
