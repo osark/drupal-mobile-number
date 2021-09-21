@@ -221,7 +221,7 @@ class MobileNumberFieldTest extends BrowserTestBase {
 
     $this->setCurrentUser($user);
     $errors = $this->createMobileNumberNode($required_name, $value, FALSE);
-    $this->assertTrue($errors, "Bypass verification requirement blocked.", 'Number Verification');
+    $this->assertTrue(!!$errors, "Bypass verification requirement blocked.", 'Number Verification');
 
     $errors = $this->createMobileNumberNode($optional_name, $value, FALSE);
     $this->assertTrue(!$errors, "Optional verification allowed unverified.", 'Number Verification');

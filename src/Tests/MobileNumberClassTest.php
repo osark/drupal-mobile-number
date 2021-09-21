@@ -98,7 +98,7 @@ class MobileNumberClassTest extends BrowserTestBase {
     $mobile_number = $this->util->getMobileNumber($int);
 
     $this->assertTrue($this->util->getCountryCode('IL') == 972, "getCountryCode()");
-    $this->assertTrue(count($this->util->getCountryOptions()), "getCountryOptions()");
+    $this->assertGreaterThan(0, count($this->util->getCountryOptions()), "getCountryOptions()");
     $this->assertTrue(count($this->util->getCountryOptions(['IL' => 'IL'])) == 1, "getCountryOptions() filtered");
     $this->assertTrue($this->util->getCountryName('IL') == 'Israel', "getCountryName()");
 
