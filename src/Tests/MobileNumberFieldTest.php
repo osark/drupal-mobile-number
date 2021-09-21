@@ -257,7 +257,7 @@ class MobileNumberFieldTest extends BrowserTestBase {
       'mobile' => substr($number, 0, 9) . '0',
     ];
     $errors = $this->createMobileNumberNodeFromInput($required_name, $input);
-    $this->assertTrue($errors, "Not yet verified number is not verified. " . ($errors ? reset($errors) : ''), 'Number Verification');
+    $this->assertTrue(!!$errors, "Not yet verified number is not verified. " . ($errors ? reset($errors) : ''), 'Number Verification');
   }
 
   /**
