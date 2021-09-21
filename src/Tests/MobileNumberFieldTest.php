@@ -15,6 +15,12 @@ use \Drupal\Tests\BrowserTestBase;
  * @group mobile_number
  */
 class MobileNumberFieldTest extends BrowserTestBase {
+  
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
 
   public static $modules = ['mobile_number', 'node'];
 

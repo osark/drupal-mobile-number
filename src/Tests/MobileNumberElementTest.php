@@ -12,6 +12,11 @@ use \Drupal\Tests\BrowserTestBase;
  */
 class MobileNumberElementTest extends BrowserTestBase {
 
+  /**
+   * {@inheritdoc}
+   */
+  protected $defaultTheme = 'stark';
+
   public static $modules = ['mobile_number'];
 
   /**
