@@ -1,9 +1,9 @@
 <?php
 
-namespace Drupal\mobile_number\Tests;
+namespace Drupal\Tests\mobile_number\Functional;
 
 use Drupal\mobile_number\MobileNumberUtilInterface;
-use \Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Mobile number class functionality.
@@ -17,7 +17,10 @@ class MobileNumberClassTest extends BrowserTestBase {
    */
   protected $defaultTheme = 'stark';
 
-  public static $modules = ['mobile_number', 'sms'];
+  protected static $modules = [
+    'mobile_number',
+    'sms',
+  ];
 
   /**
    * Mobile number util.
@@ -36,7 +39,7 @@ class MobileNumberClassTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->util = \Drupal::service('mobile_number.util');
     $this->flood = \Drupal::service('flood');

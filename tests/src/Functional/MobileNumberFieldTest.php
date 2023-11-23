@@ -1,13 +1,13 @@
 <?php
 
-namespace Drupal\mobile_number\Tests;
+namespace Drupal\Tests\mobile_number\Functional;
 
 use Drupal\Core\Entity\Entity\EntityFormDisplay;
 use Drupal\Core\Form\FormState;
 use Drupal\Core\Language\Language;
 use Drupal\field\Entity\FieldConfig;
 use Drupal\mobile_number\MobileNumberUtilInterface;
-use \Drupal\Tests\BrowserTestBase;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Mobile number field functionality.'.
@@ -22,7 +22,7 @@ class MobileNumberFieldTest extends BrowserTestBase {
   protected $defaultTheme = 'stark';
 
 
-  public static $modules = ['mobile_number', 'node'];
+  protected static $modules = ['mobile_number', 'node'];
 
   /**
    * Mobile number util.
@@ -41,7 +41,7 @@ class MobileNumberFieldTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->util = \Drupal::service('mobile_number.util');
     $this->flood = \Drupal::service('flood');

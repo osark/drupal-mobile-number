@@ -440,6 +440,7 @@ class MobileNumberItem extends FieldItemBase {
     }
 
     $verified = (bool) \Drupal::entityQuery($entity_type_id)
+      ->accessCheck(TRUE)
       ->condition($id_key, (int) $entity->id())
       ->condition($field_name, $util->getCallableNumber($mobile_number))
       ->range(0, 1)
@@ -509,6 +510,7 @@ class MobileNumberItem extends FieldItemBase {
     $entity_type_id = $entity->getEntityTypeId();
     $id_key = $entity->getEntityType()->getKey('id');
     $query = \Drupal::entityQuery($entity_type_id)
+      ->accessCheck(TRUE)
       // The id could be NULL, so we cast it to 0 in that case.
       ->condition($id_key, (int) $entity->id(), '<>')
       ->condition($field_name, $util->getCallableNumber($mobile_number))

@@ -1,0 +1,6 @@
+name: prepare_callback_test_form
+type: module
+description: Provides a PrepareCallback form for testing
+core_version_requirement: ^8.8 || ^9 || ^10
+version: VERSION
+hidden: true

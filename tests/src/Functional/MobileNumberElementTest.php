@@ -1,9 +1,10 @@
 <?php
 
-namespace Drupal\mobile_number\Tests;
+namespace Drupal\Tests\mobile_number\Functional;
 
 use Drupal\Core\Form\FormState;
-use \Drupal\Tests\BrowserTestBase;
+use Drupal\prepare_callback_test_form\PrepareCallbackTestForm;
+use Drupal\Tests\BrowserTestBase;
 
 /**
  * Mobile number form element functionality.
@@ -17,7 +18,7 @@ class MobileNumberElementTest extends BrowserTestBase {
    */
   protected $defaultTheme = 'stark';
 
-  public static $modules = ['mobile_number'];
+  protected static $modules = ['mobile_number'];
 
   /**
    * Mobile number util.
@@ -36,7 +37,7 @@ class MobileNumberElementTest extends BrowserTestBase {
   /**
    * {@inheritdoc}
    */
-  protected function setUp() {
+  protected function setUp(): void {
     parent::setUp();
     $this->util = \Drupal::service('mobile_number.util');
     $this->flood = \Drupal::service('flood');

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\mobile_number\Tests;
+namespace Drupal\prepare_callback_test_form;
 
 use Drupal\Component\Utility\Crypt;
 use Drupal\Core\Form\FormInterface;
